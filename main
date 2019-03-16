@@ -1,0 +1,108 @@
+#### BASIC PROGRAMMING
+##      1 Plan it out (What is it going to do? -> Scope)
+##      2 Design it (How do you implement the plan?)
+##      3 Debug
+##      DON'T BE AFRAID OF VERTICAL WHITESPACE!
+
+
+## Game Scope
+## - Turnbased (ugh...maybe later realtime?)
+## - Dungeon Crawler with levels (later: procedurally and endless)
+## - Player Character (later: choosable, with stats!)
+## - 2 Types of Enemies (with 2 different AIs)
+## - a few items and spells (Loot! I want later tons of it, in different tiers, with random names)
+## - Tile based system; at first limited, later basic animation system with sprites
+## - Sound effects (no music!)
+
+
+#### GRAPHICS
+## Pygame arbeitet mit Surfaces, also Oberflächen
+## Der Bildschirm ist eine Surface
+## Der Character besteht aus Surfaces
+## Der Hintergrund ist eine Surface
+## Menüs sind ebenfalls eine Surface - und können entsprechend unabhängig davon gezeichnet werden, z.B. ein Inventar
+## Anderes Schlüsselwort: Blit
+## Blit heißt quasi zeichnen; eine Oberfläche auf eine andere legen (siehe anderes PyGame-Tutorial mit "Frogger")
+## Anderes Schlüsselwort: Flip
+## Flip (und auch das Kommando Update) aktualisieren das Display oder eine Oberfläche; Update ist dabei spezifischer
+
+#Third party modules
+import tcod as libtcodpy
+import pygame
+
+#Game files
+import constants
+
+
+
+
+
+# Funktion zum Zeichnen der Grafiken
+def draw_game():
+
+    global SURFACE_MAIN
+    
+    # clear the surface
+    SURFACE_MAIN.fill(constants.COLOR_DEFAULT_BG)
+
+    #TODO draw the map
+
+    # draw the character
+    SURFACE_MAIN.blit(constants.S_PLAYER, ( 200, 200 ))
+
+    # update the display
+    pygame.display.flip() # Schmeißt alles, was wir darüber gemacht haben, auf die Oberfläche
+    
+
+
+
+
+
+# Fangen wir man mit der Game Loop an
+def game_main_loop():
+    ''' In this function we loop the mein game '''
+    game_quit = False
+
+    while not game_quit:
+
+        # Beginnen wir mit ein bisschen Pseudo-Code
+        
+        #get player input
+        events_list = pygame.event.get()
+        
+        #TODO process that input
+        for event in events_list:
+            if event.type == pygame.QUIT:
+                game_quit = True
+        
+        #TODO draw the game
+        draw_game()
+        
+    #proberly quit the game
+    pygame.quit()
+    exit()
+
+
+
+
+
+
+def game_initialize():
+    ''' This function initializes the main window, and pygame'''
+
+    global SURFACE_MAIN
+
+    # Initialize Pygame
+    pygame.init()
+
+    # globale Variablen in ALL CAPS, WIDTH und HEIGHT sind aus Extrafile "constants.py"
+    SURFACE_MAIN = pygame.display.set_mode((constants.GAME_WIDTH,constants.GAME_HEIGHT))
+
+
+
+
+
+
+if __name__ == '__main__': # irgend ein advanced programming Dings, hab ich nicht verstanden
+    game_initialize()    
+    game_main_loop()
